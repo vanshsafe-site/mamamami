@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>For MAMA & MAMI, with love</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Caveat:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+  :root{
+    --maroon: #6e1423;
+    --maroon-deep: #430c17;
+    --marigold: #e0a530;
+    --marigold-light: #f4cf7a;
+    --cream: #fdf6ea;
+    --paper: #fffaf0;
+    --thread: #b5651d;
+    --ink: #2c1810;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(224,165,48,0.08), transparent 40%),
+      radial-gradient(circle at 90% 30%, rgba(110,20,35,0.06), transparent 40%);
+  }
+
+  /* ---------- floating diyas / marigold petals ---------- */
+  #petal-canvas{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .petal{
+    position: absolute;
+    top: -30px;
+    font-size: 18px;
+    opacity: 0.85;
+    animation: fall linear infinite;
+    will-change: transform;
+  }
+  @keyframes fall{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); }
+    100%{ transform: translateY(110vh) translateX(var(--drift,20px)) rotate(360deg); }
+  }
+
+  /* ---------- top toran / marigold border strip ---------- */
+  .toran{
+    height: 14px;
+    width: 100%;
+    background:
+      repeating-linear-gradient(90deg,
+        var(--marigold) 0 10px,
+        var(--maroon) 10px 20px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8vh 6vw 6vh;
+    background:
+      linear-gradient(180deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+    color: var(--marigold-light);
+    overflow: hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: radial-gradient(circle, rgba(244,207,122,0.15) 1px, transparent 1.5px);
+    background-size: 22px 22px;
+    opacity: 0.5;
+    pointer-events:none;
+  }
+  .hero .kicker{
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+    color: var(--marigold-light);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: riseIn 0.9s ease forwards 0.2s;
+  }
+  .hero h1{
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 11vw, 5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    opacity: 0;
+    animation: riseIn 0.9s ease forwards 0.45s;
+  }
+  .hero h1 span{
+    display:block;
+    color: var(--marigold);
+    font-style: italic;
+    font-size: 0.55em;
+    margin-top: 0.3rem;
+  }
+  .hero p.sub{
+    margin-top: 1.4rem;
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
+    max-width: 480px;
+    color: rgba(253,246,234,0.85);
+    line-height: 1.7;
+    opacity: 0;
+    animation: riseIn 0.9s ease forwards 0.7s;
+  }
+  @keyframes riseIn{
+    from{ opacity: 0; transform: translateY(22px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  .scroll-cue{
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    gap: 6px;
+    color: var(--marigold-light);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    animation: bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{ transform: translate(-50%,0); }
+    50%{ transform: translate(-50%,8px); }
+  }
+  .scroll-cue .arrow{ font-size: 1.1rem; }
+
+  /* ---------- section shared ---------- */
+  section{
+    padding: 5.5rem 6vw;
+    position: relative;
+  }
+  .eyebrow{
+    font-family:'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--thread);
+    margin-bottom: 0.3rem;
+  }
+  .section-title{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    color: var(--maroon);
+    margin-bottom: 1.4rem;
+    line-height: 1.2;
+  }
+  .lede{
+    max-width: 620px;
+    font-size: clamp(0.98rem, 3.2vw, 1.08rem);
+    line-height: 1.85;
+    color: #4a352a;
+  }
+  .reveal{
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in-view{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- letter section ---------- */
+  .letter{
+    background: var(--paper);
+  }
+  .letter-card{
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid rgba(110,20,35,0.12);
+    border-radius: 4px;
+    padding: 2.4rem 1.6rem;
+    box-shadow: 0 20px 50px -20px rgba(67,12,23,0.25);
+    position: relative;
+  }
+  .letter-card::before{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--marigold), var(--maroon), var(--marigold));
+    border-radius: 4px 4px 0 0;
+  }
+  .letter-card p{
+    font-size: clamp(0.98rem, 3.2vw, 1.1rem);
+    line-height: 1.95;
+    color: #40291e;
+    margin-bottom: 1.2rem;
+  }
+  .letter-card p:last-of-type{ margin-bottom: 0; }
+  .signoff{
+    margin-top: 1.8rem;
+    font-family:'Caveat', cursive;
+    font-size: 1.7rem;
+    color: var(--maroon);
+    text-align: right;
+  }
+  .signoff small{
+    display:block;
+    font-family:'Poppins', sans-serif;
+    font-size: 0.75rem;
+    color: #8a6f5f;
+    letter-spacing: 1px;
+  }
+
+  /* ---------- polaroid gallery ---------- */
+  .gallery-wrap{
+    background: var(--cream);
+  }
+  .gallery{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+    max-width: 480px;
+    margin: 2.2rem auto 0;
+  }
+  .polaroid{
+    background: #fff;
+    padding: 10px 10px 34px;
+    box-shadow: 0 14px 28px -12px rgba(44,24,16,0.35);
+    border-radius: 2px;
+    position: relative;
+  }
+  .polaroid:nth-child(odd){ transform: rotate(-2.5deg); }
+  .polaroid:nth-child(even){ transform: rotate(2.2deg); }
+  .polaroid img{
+    display:block;
+    width:100%;
+    height: 62vw;
+    max-height: 340px;
+    object-fit: cover;
+    border-radius: 1px;
+    background: #eee;
+  }
+  .polaroid figcaption{
+    font-family:'Caveat', cursive;
+    font-size: 1.25rem;
+    color: var(--maroon-deep);
+    text-align:center;
+    margin-top: 10px;
+  }
+  .washi{
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 70px;
+    height: 22px;
+    background: repeating-linear-gradient(45deg, var(--marigold), var(--marigold) 6px, var(--maroon) 6px, var(--maroon) 12px);
+    opacity: 0.85;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+
+  /* ---------- blessings / wishes ---------- */
+  .blessings{
+    background: linear-gradient(180deg, var(--maroon-deep), var(--maroon));
+    color: var(--cream);
+    text-align:center;
+  }
+  .blessings .eyebrow{ color: var(--marigold-light); }
+  .blessings .section-title{ color: var(--marigold-light); }
+  .blessings .lede{ color: rgba(253,246,234,0.85); margin: 0 auto; }
+  .wish-grid{
+    margin-top: 2.4rem;
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 480px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .wish{
+    background: rgba(253,246,234,0.06);
+    border: 1px solid rgba(224,165,48,0.35);
+    border-radius: 10px;
+    padding: 1.2rem 1.1rem;
+    text-align:left;
+    display:flex;
+    align-items:flex-start;
+    gap: 0.8rem;
+  }
+  .wish .icon{ font-size: 1.4rem; line-height:1; margin-top:2px; }
+  .wish p{ font-size: 0.95rem; line-height: 1.6; color: rgba(253,246,234,0.92); }
+  .wish strong{ color: var(--marigold-light); display:block; font-family:'Playfair Display', serif; font-size:1.02rem; margin-bottom:2px;}
+
+  /* ---------- quote ---------- */
+  .quote-section{
+    background: var(--cream);
+    text-align:center;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+  .quote-mark{
+    font-family:'Playfair Display', serif;
+    font-size: 4rem;
+    color: var(--marigold);
+    line-height: 0.5;
+    margin-bottom: 0.6rem;
+  }
+  blockquote{
+    font-family:'Caveat', cursive;
+    font-size: clamp(1.6rem, 6.5vw, 2.4rem);
+    color: var(--maroon-deep);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.4;
+  }
+  .quote-cite{
+    margin-top: 1.2rem;
+    font-family:'Poppins', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--thread);
+  }
+  .heart-line{
+    margin-top: 1.4rem;
+    font-size: 1.4rem;
+    letter-spacing: 6px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background: var(--maroon-deep);
+    color: rgba(253,246,234,0.75);
+    text-align: center;
+    padding: 3rem 6vw 2.4rem;
+  }
+  footer .fam{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--marigold-light);
+    margin-bottom: 0.6rem;
+  }
+  footer .tiny{
+    font-size: 0.75rem;
+    color: rgba(253,246,234,0.5);
+    margin-top: 1.6rem;
+    letter-spacing: 0.5px;
+  }
+  .diya-row{
+    font-size: 1.3rem;
+    letter-spacing: 10px;
+    margin: 1rem 0;
+    opacity: 0.9;
+  }
+
+  /* ---------- tablet / desktop scale-up ---------- */
+  @media (min-width: 640px){
+    .gallery{
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 720px;
+    }
+    .wish-grid{ max-width: 640px; }
+  }
+  @media (min-width: 980px){
+    .gallery{
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 1040px;
+    }
+    section{ padding: 7rem 8vw; }
+    .letter-card{ padding: 3.2rem 3rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--marigold);
+    outline-offset: 3px;
+  }
+</style>
+</head>
+<body>
+
+<div id="petal-canvas"></div>
+
+<div class="toran"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="kicker">With gratitude, from Vansh &amp; the entire Garg family</p>
+  <h1>Thank You, <span>MAMA &amp; MAMI</span></h1>
+  <p class="sub">For opening your home, your table, and your hearts — and for a trip we will carry with us for a very long time.</p>
+  <div class="scroll-cue">
+    <span>SCROLL DOWN</span>
+    <span class="arrow">↓</span>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section class="letter">
+  <p class="eyebrow reveal">A little note</p>
+  <h2 class="section-title reveal">Dear Mama &amp; Mami,</h2>
+  <div class="letter-card reveal">
+    <p>We don't really know how to put it in words, but we're going to try anyway. Thank you for having us, for the warm meals, the warmer welcome, and for making a house feel like home the moment we walked in.</p>
+    <p>Every little thing — the laughter over shoe shopping, the silly selfies, the "no muggles beyond this point" kind of magic you filled the days with — it all added up to memories we'll be smiling about for years.</p>
+    <p>Your hospitality wasn't just generous, it was genuine. And that's the kind of thing that stays with people long after the suitcases are unpacked.</p>
+    <p class="signoff">With all our love,<br><small>VANSH &amp; THE ENTIRE GARG FAMILY</small></p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-wrap">
+  <p class="eyebrow reveal">the wonderful kids</p>
+  <h2 class="section-title reveal">Little Moments, Big Memories</h2>
+  <p class="lede reveal">Your children lit up every single day of this trip — here's a small handful of the moments they gave us.</p>
+
+  <div class="gallery">
+    <figure class="polaroid reveal">
+      <span class="washi"></span>
+      <img src="images/IMG-20260717-WA0012.jpg" alt="The kids laughing together while shoe shopping" loading="lazy">
+      <figcaption>giggles &amp; new shoes</figcaption>
+    </figure>
+    <figure class="polaroid reveal">
+      <span class="washi"></span>
+      <img src="images/IMG-20260717-WA0013.jpg" alt="A warm hug between the siblings" loading="lazy">
+      <figcaption>the tightest hugs</figcaption>
+    </figure>
+    <figure class="polaroid reveal">
+      <span class="washi"></span>
+      <img src="images/IMG-20260717-WA0014.jpg" alt="A sweet selfie moment at home" loading="lazy">
+      <figcaption>selfie squad</figcaption>
+    </figure>
+    <figure class="polaroid reveal">
+      <span class="washi"></span>
+      <img src="images/IMG-20260717-WA0017.jpg" alt="The playful no muggles beyond this point sign on the door" loading="lazy">
+      <figcaption>a little bit of magic</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- BLESSINGS -->
+<section class="blessings">
+  <p class="eyebrow reveal">wishing you well</p>
+  <h2 class="section-title reveal">For Mama &amp; Mami</h2>
+  <p class="lede reveal">As we head back, here's what we wish for you — from the bottom of our hearts.</p>
+
+  <div class="wish-grid">
+    <div class="wish reveal">
+      <span class="icon">🌿</span>
+      <p><strong>Good health, always</strong>May you both stay strong, energetic, and free of worry — today and every day ahead.</p>
+    </div>
+    <div class="wish reveal">
+      <span class="icon">🏡</span>
+      <p><strong>A home full of joy</strong>May your household always be as warm and full of laughter as it was during our stay.</p>
+    </div>
+    <div class="wish reveal">
+      <span class="icon">✨</span>
+      <p><strong>Every endeavour blessed</strong>Whatever you set out to do next, may it come to you with ease and success.</p>
+    </div>
+    <div class="wish reveal">
+      <span class="icon">💛</span>
+      <p><strong>Togetherness forever</strong>May our families stay this close, this loud, and this loving for many years to come.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="quote-mark reveal">"</div>
+  <blockquote class="reveal">i may not hv yur pics in site<br>but i hv them in my heart</blockquote>
+  <p class="quote-cite reveal">— vansh</p>
+  <p class="heart-line reveal">🧡 🪔 🧡</p>
+</section>
+
+<footer>
+  <p class="fam">With love, always</p>
+  <p>Vansh &amp; the entire Garg Family</p>
+  <div class="diya-row">🪔 🪔 🪔</div>
+  <p class="tiny">made with love for Mama &amp; Mami</p>
+</footer>
+
+<script>
+(function(){
+  // ---- scroll reveal ----
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el=> io.observe(el));
+
+  // ---- floating marigold petals / diyas ----
+  const canvas = document.getElementById('petal-canvas');
+  const symbols = ['🌼','🪔','🧡'];
+  const isSmall = window.innerWidth < 640;
+  const count = isSmall ? 10 : 18;
+
+  for(let i=0;i<count;i++){
+    const petal = document.createElement('span');
+    petal.className = 'petal';
+    petal.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+    const left = Math.random()*100;
+    const duration = 9 + Math.random()*10;
+    const delay = Math.random()*10;
+    const drift = (Math.random()*80 - 40) + 'px';
+    petal.style.left = left + 'vw';
+    petal.style.animationDuration = duration + 's';
+    petal.style.animationDelay = delay + 's';
+    petal.style.setProperty('--drift', drift);
+    petal.style.fontSize = (14 + Math.random()*10) + 'px';
+    canvas.appendChild(petal);
+  }
+})();
+</script>
+
+</body>
+</html>
